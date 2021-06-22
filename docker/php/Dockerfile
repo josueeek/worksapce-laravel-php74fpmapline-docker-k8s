@@ -43,12 +43,15 @@ RUN docker-php-ext-configure pdo \
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN chmod +rx /usr/bin/composer
+# COPY ./src/ /var/www/html
+# WORKDIR /var/www/html
 
-RUN composer install \
-    --optimize-autoloader \
-    --no-interaction \
-    --no-plugins \
-    --no-scripts \
-    --prefer-dist \
-    --ignore-platform-reqs
+# RUN chmod +rx /usr/bin/composer
+
+# RUN composer install \
+#     --optimize-autoloader \
+#     --no-interaction \
+#     --no-plugins \
+#     --no-scripts \
+#     --prefer-dist \
+#     --ignore-platform-reqs
