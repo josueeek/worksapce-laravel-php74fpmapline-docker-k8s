@@ -2,14 +2,12 @@
 
 Kubernetes is an open-source system for automating deployment, scaling, and management of containerized applications. I'm using this personal repository as an attempt to package and run Laravel using Docker and deploy it on Kubernetes. In this tutorial I'm using Minikube, which is a tool that makes it easy to run Kubernetes locally. Minikube runs a single-node Kubernetes cluster inside a VM on your laptop for users looking to try out Kubernetes or develop with it day-to-day. I'll be also using Docker Hub, which is a Docker repository to let you share images with other co-workers or developers.
 
-This repository is a copy of the laravel-docker-k8s from [nahidulhasan](https://github.com/nahidulhasan/laravel-docker-k8s), but since I'm going to adjust it heavily I think it is better to copy than to fork.
-
 ### Build and run the docker image from the project folder
 
 Start the tutorial by cloning the current repository by using the following command:
 
 ``` 
-git clone https://github.com/pietheinstrengholt/laravel-docker-k8s
+git clone https://github.com/pietheinstrengholt/laravel-docker
 ```
  
 After cloning the repository, enter the root of the directory and run the following command from your terminal. This command requires you to have Docker installed. You can install the Docker client by using the instructions from this [link](https://docs.docker.com/). The command below builds the Docker image using this repository.
@@ -29,15 +27,13 @@ If the image works correctly you should be able to open the following webpage. M
 ```
 http://localhost:8181/
 ```
-
-![Screenshot](public/img/laravel-docker.png)
  
 ### Build the image and push to Docker Hub
 
 The next step is that we will create a new Docker image, which will be pushed to the Docker Hub. The Docker Hub is a repository that hosts images from many different projects. Building and pushing an image allows us to pull in an image to Kubernetes at a later stage. Perform the following command to build the image:
 
 ```sh
-docker build . -f ./deploy/dockerfile -t laravel-on-k8s:v1
+docker build . -f ./deploy/dockerfile -t laravel-on:v1
 ```
 
 Before pushing the image make sure you are logged into the Docker Hub. Run the command below to login. If you not have a Docker account please sign up using the this [link](https://hub.docker.com/).
@@ -46,7 +42,7 @@ Before pushing the image make sure you are logged into the Docker Hub. Run the c
 docker login
 ```
 
-Next step is to tag and label the image before pushing it to the Docker Hub repostory. I'm using my own credentials here, so if you want to use your own credentals change the pietheinstrengholt username. The laravel-on-k8s is repository name. v1 is the tag name.
+Next step is to tag and label the image before pushing it to the Docker Hub repostory. I'm using my own credentials here, so if you want to use your own credentals change the pietheinstrengholt username. The laravel-on is repository name. v1 is the tag name.
 
 ```
 docker tag laravel-on-k8s:v1 docker.io/pietheinstrengholt/laravel-on-k8s:v1
@@ -55,7 +51,7 @@ docker tag laravel-on-k8s:v1 docker.io/pietheinstrengholt/laravel-on-k8s:v1
 The final and last step is to upload the image. Upload the image by using the following command:
 
 ```
-docker push docker.io/pietheinstrengholt/laravel-on-k8s:v1
+docker push docker.io/name/laravel-on:v1
 ```
 
 Go to the hub.docker.com and validate that the image has been uploaded correctly. If so, we can continue with Kubernetes.
@@ -72,7 +68,7 @@ The next step is that we start pulling in the image from the Docker Hub. If you 
 There should be a line with the following content. Change this line using your own credentials name.
 
 ```
-image: docker.io/pietheinstrengholt/laravel-docker-k8s:v1
+image: docker.io/name/laravel-docker:v1
 ```
 
 Next step is to pull in the image. Do this by executing the following commands:
@@ -141,12 +137,12 @@ kubectl get events
 ### TODO
 - Add MySQL instances
 - Add AWS & Azure Services
-- Replace Laravel 5.4 with latest
+- Replace Laravel 8.* with latest
 - Run the images straight from the docker.io hub:
 
 ```
-kubectl run --image=docker.io/pietheinstrengholt/laravel-docker-k8s:v1 laravel-docker-k8s --port=8181 --env="DOMAIN=cluster"
-kubectl expose deployment laravel-docker-k8s --port=8181 --name=laravel-docker-k8s
+kubectl run --image=docker.io/name/laravel-docker:v1 laravel-docker --port=8181 --env="DOMAIN=cluster"
+kubectl expose deployment laravel-docker --port=8181 --name=laravel-docker
 ```
 
 ### Extra Note :
