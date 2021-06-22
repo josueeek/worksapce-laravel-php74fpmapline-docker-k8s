@@ -7,7 +7,7 @@ Kubernetes is an open-source system for automating deployment, scaling, and mana
 Start the tutorial by cloning the current repository by using the following command:
 
 ``` 
-git clone https://github.com/pietheinstrengholt/laravel-docker
+git clone https://github.com/name/laravel-docker
 ```
  
 After cloning the repository, enter the root of the directory and run the following command from your terminal. This command requires you to have Docker installed. You can install the Docker client by using the instructions from this [link](https://docs.docker.com/). The command below builds the Docker image using this repository.
@@ -45,7 +45,7 @@ docker login
 Next step is to tag and label the image before pushing it to the Docker Hub repostory. I'm using my own credentials here, so if you want to use your own credentals change the pietheinstrengholt username. The laravel-on is repository name. v1 is the tag name.
 
 ```
-docker tag laravel-on-k8s:v1 docker.io/pietheinstrengholt/laravel-on-k8s:v1
+docker tag laravel-on-k8s:v1 docker.io/name/laravel-on:v1
 ```
 
 The final and last step is to upload the image. Upload the image by using the following command:
@@ -92,8 +92,6 @@ http://192.168.99.100:30000/#!/overview?namespace=default
 ```
 
 See the screenshot below:
-
-![Screenshot](public/img/kubernetes.png)
 
 We can also validate the status by using the commandline. Run the following command:
 
